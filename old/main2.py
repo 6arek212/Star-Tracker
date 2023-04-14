@@ -5,7 +5,7 @@ import os
 import numpy as np
 from star_finder import detect_stars
 from pillow_heif import register_heif_opener
-import img_compare as cp
+import old.img_compare as cp
 register_heif_opener()
 
 
@@ -43,11 +43,11 @@ draw_stars(s1, ax1)
 map_stars, v1, v2 = cp.map_stars(s1, s2)
 draw_stars(map_stars, ax2)
 
-draw_stars(v1, ax1, color='g')
-draw_stars(v2, ax2, color='g')
+# draw_stars(v1, ax1, color='g')
+# draw_stars(v2, ax2, color='g')
+
+print(s1)
 print(map_stars)
-print(v1)
-print(v2)
 
 plt.tight_layout()
 ax1.imshow(image1_arr, cmap='gray', vmin=0, vmax=255)
