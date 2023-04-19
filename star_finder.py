@@ -20,7 +20,7 @@ def get_stars(image: np.ndarray, size: tuple):
     for i in circles[0, :]:
         if i[0] < size[0] and i[1] < size[1]:
             circles_cordinates.append(
-                (i[0], i[1], i[2] + 5,  image[i[0], i[1]]))
+                (int(i[0]), int(i[1]) , i[2] + 5,  image[i[0], i[1]]))
     return circles_cordinates
 
 
