@@ -1,16 +1,10 @@
 from display_imgs import show_data
 import star_finder as finder
 import img_compare as compare
-import math
-import random
-from matplotlib.patches import ConnectionPatch
 import numpy as np
 import cv2
 from PIL import Image
 from pillow_heif import register_heif_opener
-from ransac_line_fit import ransac_line_fit
-import matplotlib.pyplot as plt
-
 
 # support for HEIC images
 register_heif_opener()

@@ -1,6 +1,4 @@
-import math
 import random
-from matplotlib.patches import ConnectionPatch
 import numpy as np
 import cv2
 from PIL import Image
@@ -8,7 +6,6 @@ from pillow_heif import register_heif_opener
 from display_imgs import show_data
 from ransac_line_fit import ransac_line_fit
 from star_finder import get_stars
-import matplotlib.pyplot as plt
 
 
 # create the transformation matrix based on two sets of points
