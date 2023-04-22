@@ -38,9 +38,15 @@ finder.save_stars_coordinates('./fr1_results.txt', stars1)
 finder.save_stars_coordinates('./fr2_results.txt', stars2)
 
 
-# write the coordinates to a file
-mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2 = compare.map_stars(
-        stars1, stars2)
+# compare stars
+mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2, matching_ratio = compare.map_stars(
+    stars1, stars2)
+compare.save_mapped_stars('./fr_mappings.txt', mapped_stars)
+
+print('matching ratio:', matching_ratio)
+
 
 show_data(source_points, dest_points,
-              points_on_line_1, points_on_line_2,  mapped_stars, img1, img2)
+          points_on_line_1, points_on_line_2,  mapped_stars, img1, img2)
+
+

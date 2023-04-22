@@ -3,8 +3,7 @@
 
 In this project we match two images by the stars
 
-<img height="400" src="https://user-images.githubusercontent.com/10331972/233772748-6f8bc387-3a52-415e-883d-02bf070458d3.png"/>
-
+<img  height="400" src="https://user-images.githubusercontent.com/10331972/233788698-4bf377ff-731a-4745-89f9-fcf8e489f047.png"/>
 
 ## Try it
 
@@ -20,12 +19,24 @@ In this project we match two images by the stars
     # compare imgs
     mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2 = compare.map_stars(stars1, stars2)
 
-    # display the images
-    show_data(source_points, dest_points,
-              points_on_line_1, points_on_line_2,  mapped_stars, img1, img2)
+    # compare stars
+    mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2, matching_ratio = compare.map_stars(stars1, stars2)
+    
+    compare.save_mapped_stars('./fr_mappings.txt', mapped_stars)
+
+    print('matching ratio:', matching_ratio)
+
+
+## Some notes
+
+- we use a randomized algorithm, therefore sometimes it may fail
+- matching ratio := number of inliers / number of mapped stars
+
 
 
 ## Results
+
+<img height="400" src="https://user-images.githubusercontent.com/10331972/233772748-6f8bc387-3a52-415e-883d-02bf070458d3.png"/>
 
 <img  height="400" src="https://user-images.githubusercontent.com/10331972/233772750-708a1bae-8358-4e18-a329-60daae1afe82.png"/>
 
@@ -34,7 +45,6 @@ In this project we match two images by the stars
 <img  height="400" src="https://user-images.githubusercontent.com/10331972/233772755-690c3eff-121c-4e7f-b4ef-b6a72c3dae4f.png"/>
 
 
-<img  height="400" src="https://user-images.githubusercontent.com/10331972/233788698-4bf377ff-731a-4745-89f9-fcf8e489f047.png"/>
 
 
 ## Our Algorithm

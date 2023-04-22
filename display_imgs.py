@@ -25,11 +25,11 @@ def show_data(source_points, dest_points, points_on_line_1, points_on_line_2,  m
                            .5, (0, 255, 255), 1, cv2.LINE_AA)
 
     fig, (ax1, ax2) = plt.subplots(1, 2)
-    for i, p in enumerate(points_on_line_1):
-        con = ConnectionPatch(xyA=(p[0], p[1]), xyB=(mapped_stars[i][0], mapped_stars[i][1]), coordsA="data", coordsB="data",
+    for i, p in enumerate(mapped_stars):
+        con = ConnectionPatch(xyA=p[0], xyB=p[1], coordsA="data", coordsB="data",
                               axesA=ax1, axesB=ax2, color="red")
         ax2.add_artist(con)
-       
+
     ax1.imshow(img1)
     ax2.imshow(img2)
     plt.show()

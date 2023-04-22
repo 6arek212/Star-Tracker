@@ -57,31 +57,36 @@ def count_inliers(stars1, stars2, T, e=16):
     return cnt
 
 
-def find_good_triangle(points, iterations=100, e=3):
+# def find_good_triangle(points, iterations=100, e=3):
 
-    for i in range(iterations):
-        # Pick three random points from the set
-        p1, p2, p3 = random.sample(points, 3)
+#     for i in range(iterations):
+#         # Pick three random points from the set
+#         p1, p2, p3 = random.sample(points, 3)
 
-        # Check that the points are not collinear
-        x1, y1 = (p1[0], p1[1])
-        x2, y2 = (p2[0], p2[1])
-        x3, y3 = (p3[0], p3[1])
+#         # Check that the points are not collinear
+#         x1, y1 = (p1[0], p1[1])
+#         x2, y2 = (p2[0], p2[1])
+#         x3, y3 = (p3[0], p3[1])
 
-        if (y2 - y1) * (x3 - x2) == (y3 - y2) * (x2 - x1):
-            continue
+#         if (y2 - y1) * (x3 - x2) == (y3 - y2) * (x2 - x1):
+#             continue
 
-        # Check that the angles formed by the three points are greater than zero
-        a = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-        b = math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
-        c = math.sqrt((x1 - x3) ** 2 + (y1 - y3) ** 2)
-        cos_a = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c)
-        cos_b = (c ** 2 + a ** 2 - b ** 2) / (2 * c * a)
-        cos_c = (a ** 2 + b ** 2 - c ** 2) / (2 * a * b)
+#         # Check that the angles formed by the three points are greater than zero
+#         a = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+#         b = math.sqrt((x3 - x2) ** 2 + (y3 - y2) ** 2)
+#         c = math.sqrt((x1 - x3) ** 2 + (y1 - y3) ** 2)
+#         cos_a = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c)
+#         cos_b = (c ** 2 + a ** 2 - b ** 2) / (2 * c * a)
+#         cos_c = (a ** 2 + b ** 2 - c ** 2) / (2 * a * b)
 
-        if cos_a <= 0 or cos_b <= 0 or cos_c <= 0:
-            continue
-        return (p1, p2, p3)
+#         if cos_a <= 0 or cos_b <= 0 or cos_c <= 0:
+#             continue
+#         return (p1, p2, p3)
+
+
+def matching_ratio(set_1, set_2, inliers_count):
+    length = min(len(set_1), len(set_2))
+    return inliers_count / length
 
 
 # map stars with constant number of iterations
@@ -96,7 +101,7 @@ def map_stars(stars1, stars2, iteration=10000):
 
     print('-----', len(points_on_line_1), len(points_on_line_2))
     best_t = None
-    current = -1
+    inliers_count = -1
     tried_seq = []
     pick_cnt = 3
     source_1 = None
@@ -128,29 +133,25 @@ def map_stars(stars1, stars2, iteration=10000):
         # check how many inliers points
         count = count_inliers(points_on_line_1, points_on_line_2, t)
 
-        if (count > current):
-            current = count
+        if (count > inliers_count):
+            inliers_count = count
             best_t = t
             source_1 = s1
             source_2 = s2
 
-    print(current)
     mapped_stars = []
-    for star in points_on_line_1:
+    for i, star in enumerate(points_on_line_1):
         x, y = best_t((star[0], star[1]))
-        mapped_stars.append((x, y, star[2], star[3]))
+        mapped_stars.append([(star[0], star[1]), (x, y)])
 
-    return (mapped_stars, source_1, source_2, line1, points_on_line_1, line2, points_on_line_2)
-
-
+    return (mapped_stars, source_1, source_2, line1, points_on_line_1, line2, points_on_line_2, matching_ratio(points_on_line_1, points_on_line_2, inliers_count))
 
 
-
-# def save_mapped_stars(output_path, source_stars, mapped_stars):
-#     with open(output_path, "w") as f:
-#         f.write(f"x y r b\n")
-#         for i in range(0, len(source_stars)):
-#             f.write(f"{star[0]} , {star[1]} , {star[2]} , {star[3]}\n")
+def save_mapped_stars(output_path, mapped_stars):
+    with open(output_path, "w") as f:
+        f.write(f"source dest\n")
+        for i in range(0, len(mapped_stars)):
+            f.write(f"{mapped_stars[0]} , {mapped_stars[1]}\n")
 
 
 # run main function
@@ -176,10 +177,10 @@ if __name__ == '__main__':
     stars1 = get_stars(img1_gray, size)
     stars2 = get_stars(img2_gray, size)
 
-    mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2 = map_stars(
+    mapped_stars, source_points, dest_points, line1, points_on_line_1, line2, points_on_line_2, inliers_count = map_stars(
         stars1, stars2)
 
-    print(mapped_stars)
+    # print(mapped_stars)
     img1 = cv2.line(
         img1, (line1[0], line1[1]), (line1[2], line1[3]), (255, 0, 255), 1, 0)
 
