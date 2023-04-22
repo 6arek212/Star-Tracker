@@ -113,7 +113,7 @@ def map_stars(stars1, stars2, iteration=50000):
 
     if (len(points_on_line_2) > 16):
         points_on_line_2 = random.sample(points_on_line_2, 16)
-    # print('---',s1)
+    
     s1 = find_good_triangle(points_on_line_1)
     for i in range(iteration):
         # s1 = random.sample(points_on_line_1, pick_cnt)
@@ -149,6 +149,7 @@ def map_stars(stars1, stars2, iteration=50000):
     return (mapped_stars, source_1, source_2, line1, points_on_line_1, line2, points_on_line_2)
 
 
+# project the images side by side with matching lines
 def show_data(source_points, dest_points, points_on_line_1, points_on_line_2,  mapped_stars, img1, img2):
 
     for p in points_on_line_1:
