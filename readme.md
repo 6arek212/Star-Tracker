@@ -5,16 +5,6 @@ In this project we match two images by the stars
 
 <img height="400" src="https://user-images.githubusercontent.com/10331972/233772748-6f8bc387-3a52-415e-883d-02bf070458d3.png"/>
 
-## About the simulation
-
-- **PID** controller was used to control the engine thrust and vehicle 
-angle, It's done by maintaining a specific vertical/horizontal speed and angle.
-- The starting point mimcs bereshit actual landing settings
-- Landing physics
-
-### Starting Settings
-
-
 
 ## Results
 
