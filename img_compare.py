@@ -34,7 +34,7 @@ def find_point(stars, source_point, mapped_point, e):
         dist_from_source = np.sqrt(
             (source_point[0]-x2) ** 2 + (source_point[1]-y2) ** 2)
         dist_s = np.sqrt((x1-x2) ** 2 + (y1-y2) ** 2)
-        if dist_s < e and abs(r1 - r2) < 4:
+        if dist_s < e and abs(r1 - r2) < 6:
             return star
     return None
 
@@ -187,11 +187,5 @@ if __name__ == '__main__':
         stars1, stars2)
 
     # print(mapped_stars)
-    img1 = cv2.line(
-        img1, (line1[0], line1[1]), (line1[2], line1[3]), (255, 0, 255), 1, 0)
-
-    img2 = cv2.line(img2, (line2[0], line2[1]),
-                    (line2[2], line2[3]), (255, 0, 255), 1, 0)
-
     show_data(source_points, dest_points,
-              points_on_line_1, points_on_line_2,  mapped_stars, img1, img2)
+              points_on_line_1, line1, points_on_line_2, line2,  mapped_stars, img1, img2)

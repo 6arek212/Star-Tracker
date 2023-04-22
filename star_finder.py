@@ -14,7 +14,7 @@ def get_stars(image: np.ndarray, size: tuple, threshold=127):
     length = len(circles[0, :])
     if length > desired_size:
         for t in range(1, 6):
-            circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 2, 20,
+            circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 1, 20,
                                        param1=250, param2=t, minRadius=2, maxRadius=6)
             length = len(circles[0, :])
             if length < desired_size:

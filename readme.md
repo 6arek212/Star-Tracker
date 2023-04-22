@@ -24,12 +24,16 @@ In this project we match two images by the stars
     
     compare.save_mapped_stars('./fr_mappings.txt', mapped_stars, size, matching_ratio)
 
+    show_data(source_points, dest_points,
+          points_on_line_1, line1, points_on_line_2, line2,  mapped_stars, img1, img2)
+
+
     print('matching ratio:', matching_ratio)
 
 
 ## Some notes
 
-- we use a randomized algorithm, therefore sometimes it may fail
+- we use a randomized algorithm, therefore sometimes it may fail and requires multiple runs to get a perfect match
 - matching ratio := number of inliers / number of mapped stars
 
 

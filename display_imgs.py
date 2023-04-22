@@ -6,7 +6,13 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import ConnectionPatch
 
 
-def show_data(source_points, dest_points, points_on_line_1, points_on_line_2,  mapped_stars, img1, img2):
+def show_data(source_points, dest_points, points_on_line_1, line1, points_on_line_2, line2,  mapped_stars, img1, img2):
+
+    img1 = cv2.line(
+        img1, (line1[0], line1[1]), (line1[2], line1[3]), (255, 0, 255), 1, 0)
+
+    img2 = cv2.line(img2, (line2[0], line2[1]),
+                    (line2[2], line2[3]), (255, 0, 255), 1, 0)
 
     for p in points_on_line_1:
         img1 = cv2.circle(img1, (p[0], p[1]), p[2], (255, 0, 255), 1, 0)
