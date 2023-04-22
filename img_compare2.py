@@ -187,8 +187,8 @@ if __name__ == '__main__':
 
     path1 = './imgs/fr1.jpg'
     path2 = './imgs/fr2.jpg'
-    # path1 = './imgs/ST_db1.png'
-    # path2 = './imgs/ST_db2.png'
+    path1 = './imgs/ST_db1.png'
+    path2 = './imgs/ST_db2.png'
     # path1 = './imgs/IMG_3053.HEIC'
     # path2 = './imgs/IMG_3054.HEIC'
     size = (600, 600)
