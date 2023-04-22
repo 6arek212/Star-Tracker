@@ -99,7 +99,7 @@ def map_stars(stars1, stars2, iteration=10000):
     line1, points_on_line_1 = ransac_line_fit(stars1)
     line2, points_on_line_2 = ransac_line_fit(stars2)
 
-    print('-----', len(points_on_line_1), len(points_on_line_2))
+    # print('-----', len(points_on_line_1), len(points_on_line_2))
     best_t = None
     inliers_count = -1
     tried_seq = []
