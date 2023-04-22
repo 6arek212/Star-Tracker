@@ -2,7 +2,7 @@ import math
 import random
 
 
-def line_cor(a, b, c, xlim=(0, 600), ylim=(600, 600)):
+def line_cor(a, b, c, xlim=(0, 600)):
     # Compute two points on the line
     x1 = xlim[0]
     y1 = (-a*x1 - c) / b

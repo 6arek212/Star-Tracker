@@ -1,12 +1,15 @@
+'''
+this is a manual mapping test
+'''
+
 import math
-import random
 from matplotlib.patches import ConnectionPatch
 import numpy as np
 import cv2
 from PIL import Image
 import matplotlib.pyplot as plt
-
 from ransac_line_fit import ransac_line_fit
+
 
 
 path1 = './imgs/fr1.jpg'
@@ -53,8 +56,8 @@ fig, (ax1, ax2) = plt.subplots(1, 2)
 # [[563, 480], [483, 450], [441, 340], [326, 330]  , [378 , 56] , [63 , 488] , [258,528]]
 
 
-src = [[570, 474], [537, 436], [538,257]]
-dest = [[483, 450], [457, 414], [479 , 247]]
+src = [[570, 474], [537, 436], [538, 257]]
+dest = [[483, 450], [457, 414], [479, 247]]
 pts_src = np.array(np.float32([(p[0], p[1]) for p in src]))
 pts_dst = np.array(np.float32([(p[0], p[1]) for p in dest]))
 
@@ -172,12 +175,9 @@ for i, p in enumerate(pts_dst):
 mapped_points = [mapper(p) for p in points_on_line_1]
 
 
-
-
-
 for i, p in enumerate(points_on_line_1):
     con = ConnectionPatch(xyA=(p[0], p[1]), xyB=(mapped_points[i][0], mapped_points[i][1]), coordsA="data", coordsB="data",
-                      axesA=ax1, axesB=ax2, color="red")
+                          axesA=ax1, axesB=ax2, color="red")
     ax2.add_artist(con)
     # ax1.plot(p[0], p[1], 'ro', markersize=10)
     # ax2.plot(mapped_points[i][0], mapped_points[i][1], 'ro', markersize=10)

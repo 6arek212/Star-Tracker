@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 from PIL import Image
 from pillow_heif import register_heif_opener
+from display_imgs import show_data
 from ransac_line_fit import ransac_line_fit
 from star_finder import get_stars
 import matplotlib.pyplot as plt
@@ -57,8 +58,6 @@ def count_inliers(stars1, stars2, T, e=16):
 
 
 def find_good_triangle(points, iterations=100, e=3):
-    triangle = None
-    angels = None
 
     for i in range(iterations):
         # Pick three random points from the set
@@ -82,16 +81,11 @@ def find_good_triangle(points, iterations=100, e=3):
 
         if cos_a <= 0 or cos_b <= 0 or cos_c <= 0:
             continue
-
-        # if triangle is None:
-        #     angels = (cos_a, cos_b, cos_c)
-        #     triangle = (p1, p2, p3)
-        # elif :
         return (p1, p2, p3)
 
 
 # map stars with constant number of iterations
-def map_stars(stars1, stars2, iteration=50000):
+def map_stars(stars1, stars2, iteration=10000):
     '''
         1- pick two identical stars in each list
         2- make transformation matrix from stars1 -> stars2
@@ -113,10 +107,10 @@ def map_stars(stars1, stars2, iteration=50000):
 
     if (len(points_on_line_2) > 16):
         points_on_line_2 = random.sample(points_on_line_2, 16)
-    
-    s1 = find_good_triangle(points_on_line_1)
+
+    # s1 = find_good_triangle(points_on_line_1)
     for i in range(iteration):
-        # s1 = random.sample(points_on_line_1, pick_cnt)
+        s1 = random.sample(points_on_line_1, pick_cnt)
         s2 = random.sample(points_on_line_2, pick_cnt)
 
         tup = (s1, s2)
@@ -149,36 +143,14 @@ def map_stars(stars1, stars2, iteration=50000):
     return (mapped_stars, source_1, source_2, line1, points_on_line_1, line2, points_on_line_2)
 
 
-# project the images side by side with matching lines
-def show_data(source_points, dest_points, points_on_line_1, points_on_line_2,  mapped_stars, img1, img2):
 
-    for p in points_on_line_1:
-        img1 = cv2.circle(img1, (p[0], p[1]), p[2], (255, 0, 255), 1, 0)
 
-    for p in points_on_line_2:
-        img2 = cv2.circle(img2, (p[0], p[1]), p[2], (255, 0, 255), 1, 0)
 
-    for i, p in enumerate(source_points):
-        img1 = cv2.circle(img1, (int(p[0]), int(p[1])), 10, (0, 255, 0), 0)
-        img1 = cv2.putText(img1, str(i), (int(p[0] + 5), int(p[1]-5)), cv2.FONT_HERSHEY_SIMPLEX,
-                           .5, (0, 255, 255), 1, cv2.LINE_AA)
-
-    for i, p in enumerate(dest_points):
-        img2 = cv2.circle(img2, (int(p[0]), int(p[1])), p[2]-2, (0, 255, 0), 0)
-        img2 = cv2.putText(img2, str(i), (int(p[0] + 5), int(p[1]-5)), cv2.FONT_HERSHEY_SIMPLEX,
-                           .5, (0, 255, 255), 1, cv2.LINE_AA)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    for i, p in enumerate(points_on_line_1):
-        con = ConnectionPatch(xyA=(p[0], p[1]), xyB=(mapped_stars[i][0], mapped_stars[i][1]), coordsA="data", coordsB="data",
-                              axesA=ax1, axesB=ax2, color="red")
-        ax2.add_artist(con)
-        # ax1.plot(p[0], p[1], 'ro', markersize=10)
-        # ax2.plot(mapped_points[i][0], mapped_points[i][1], 'ro', markersize=10)
-
-    ax1.imshow(img1)
-    ax2.imshow(img2)
-    plt.show()
+# def save_mapped_stars(output_path, source_stars, mapped_stars):
+#     with open(output_path, "w") as f:
+#         f.write(f"x y r b\n")
+#         for i in range(0, len(source_stars)):
+#             f.write(f"{star[0]} , {star[1]} , {star[2]} , {star[3]}\n")
 
 
 # run main function
@@ -187,8 +159,10 @@ if __name__ == '__main__':
 
     path1 = './imgs/fr1.jpg'
     path2 = './imgs/fr2.jpg'
-    # path1 = './imgs/ST_db1.png'
-    # path2 = './imgs/ST_db2.png'
+    # path1 = './imgs/1.jpg'
+    # path2 = './imgs/2.jpg'
+    path1 = './imgs/ST_db1.png'
+    path2 = './imgs/ST_db2.png'
     # path1 = './imgs/IMG_3053.HEIC'
     # path2 = './imgs/IMG_3054.HEIC'
     size = (600, 600)

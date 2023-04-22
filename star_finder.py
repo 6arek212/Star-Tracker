@@ -4,19 +4,24 @@ from PIL import Image
 from pillow_heif import register_heif_opener
 
 
-def __detect_stars(img: np.ndarray):
-    '''detect all stars and draw a red circle'''
-    circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 2, 20,
-                               param1=250, param2=1, minRadius=2, maxRadius=6)
-    return circles
-
-
 # main runing function
 def get_stars(image: np.ndarray, size: tuple, threshold=127):
-    _, threshold = cv2.threshold(
-        image, threshold, 255, cv2.THRESH_BINARY, dst=None)
-    # image = threshold
-    circles = __detect_stars(image)
+    circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 2, 20,
+                               param1=250, param2=1, minRadius=2, maxRadius=6)
+
+    # no need for more that 20 star, try to reduce the number
+    desired_size = 20
+    length = len(circles[0, :])
+    if length > desired_size:
+        for t in range(1, 6):
+            circles = cv2.HoughCircles(image, cv2.HOUGH_GRADIENT, 2, 20,
+                                       param1=250, param2=t, minRadius=2, maxRadius=6)
+            length = len(circles[0, :])
+            if length < desired_size:
+                break
+
+    if circles is None:
+        return []
     circles = np.uint16(np.around(circles))
     circles_cordinates = []
     for i in circles[0, :]:
@@ -27,12 +32,24 @@ def get_stars(image: np.ndarray, size: tuple, threshold=127):
     return circles_cordinates
 
 
+def save_stars_coordinates(output_path , stars):
+    with open(output_path, "w") as f:
+        f.write(f"x y r b\n")
+        for star in stars:
+            f.write(f"{star[0]} , {star[1]} , {star[2]} , {star[3]}\n")
+
+
+
+
 # run main function
 if __name__ == '__main__':
     register_heif_opener()
 
     path1 = './imgs/fr1.jpg'
+    # path1 = './imgs/ST_db1.png'
     path2 = './imgs/ST_db2.png'
+    # path1 = './imgs/1.jpg'
+    # path2 = './imgs/2.jpg'
     size = (600, 600)
 
     img1 = np.array(Image.open(path1).resize(size))
@@ -43,8 +60,6 @@ if __name__ == '__main__':
 
     stars1 = get_stars(img1_gray, size)
     stars2 = get_stars(img2_gray, size)
-
-    print(len(stars1), len(stars2))
 
     # draw the outer circle
     for i in stars1:
