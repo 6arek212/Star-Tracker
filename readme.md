@@ -51,13 +51,13 @@ In this project we match two images by the stars
 
 
 
-## Our Algorithm
+## Algorithm
 
 - 1- Run ransac line fitting on stars1 and stars2
 - 2- Pick 3 random stars from each set
 - 3- make transformation matrix
-- 4- return on 2 for n iterations
-- return the mapped points , with the best transformation matrix
+- 4- repeat from step 2 for n iterations
+- return the mapped points , with the best transformation matrix etc
 
 
 
