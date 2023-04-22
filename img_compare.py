@@ -147,11 +147,17 @@ def map_stars(stars1, stars2, iteration=10000):
     return (mapped_stars, source_1, source_2, line1, points_on_line_1, line2, points_on_line_2, matching_ratio(points_on_line_1, points_on_line_2, inliers_count))
 
 
-def save_mapped_stars(output_path, mapped_stars):
+def save_mapped_stars(output_path, mapped_stars,  size: tuple, ratio=None):
     with open(output_path, "w") as f:
         f.write(f"source dest\n")
-        for i in range(0, len(mapped_stars)):
-            f.write(f"{mapped_stars[0]} , {mapped_stars[1]}\n")
+        for s_d_star in mapped_stars:
+            source_star, dest_star = s_d_star
+            if dest_star[0] < size[1] and dest_star[1] < size[0] and dest_star[0] >= 0 and dest_star[1] >= 0:
+                f.write(f"{source_star} , {dest_star}\n")
+            else:
+                f.write(f"{source_star} , no matching \n")
+        if (matching_ratio is not None):
+            f.write(f'\nmatching ratio: {ratio}')
 
 
 # run main function
