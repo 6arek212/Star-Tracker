@@ -7,6 +7,14 @@ In this project we match two images by the stars
 
 ## Try it
 
+### Packages Requires
+
+    pip install matplotlib
+    pip install numpy
+    pip install pillow-heif
+    pip install opencv-python
+ 
+<br/>
 
     # get star coordinates
     stars1 = finder.get_stars(img1_gray, size)
