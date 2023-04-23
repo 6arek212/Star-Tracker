@@ -40,7 +40,7 @@ In this project we match two images by the stars
     print('matching ratio:', matching_ratio)
 
 
-## Some notes
+## Some Notes
 
 - we use a randomized algorithm, therefore sometimes it may fail and requires multiple runs to get a perfect match
 - matching ratio := number of inliers / number of mapped stars
