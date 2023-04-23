@@ -5,16 +5,17 @@ In this project we match two images by the stars
 
 <img  height="400" src="https://user-images.githubusercontent.com/10331972/233788698-4bf377ff-731a-4745-89f9-fcf8e489f047.png"/>
 
-## Try it
 
-### Packages Requires
+## Install Packages Requires
 
     pip install matplotlib
     pip install numpy
     pip install pillow-heif
     pip install opencv-python
  
-<br/>
+
+
+## Try it
 
     # get star coordinates
     stars1 = finder.get_stars(img1_gray, size)
