@@ -1,7 +1,7 @@
 
 # Stars Tracker
 
-In this project we match two images by the stars
+In this project we match two images of stars by using RANSC algorithm
 
 <img  height="400" src="https://user-images.githubusercontent.com/10331972/233788698-4bf377ff-731a-4745-89f9-fcf8e489f047.png"/>
 
